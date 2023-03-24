@@ -1,0 +1,32 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+	"name": "FastAPI",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "python:3.11",
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"charliermarsh.ruff"
+			],
+			"settings": {
+				"files.trimTrailingWhitespace": true,
+				"files.insertFinalNewline": true,
+				"python.formatting.provider": "black",
+				"python.linting.enabled": true,
+				"editor.formatOnSave": true,
+				"editor.tabSize": 2,
+				"[python]": {
+					"editor.tabSize": 4,
+					"editor.codeActionsOnSave": {
+						"source.organizeImports": true
+					}
+				}
+			}
+		}
+	},
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "pip install pip-tools && make pip-sync"
+}
