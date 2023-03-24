@@ -1,4 +1,7 @@
-.venv
-.ruff_cache
+.env
+.venv/
+.ruff_cache/
 *.pyc
 *.egg-info
+*.sqlite3
+venv/

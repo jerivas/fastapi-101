@@ -4,11 +4,11 @@ pip-compile:
 pip-sync:
 	python -m piptools sync requirements.txt
 
-serve:
-	echo serve
+dev:
+	uvicorn app.main:app --host 0.0.0.0 --reload --port 9000
 
-build:
-	echo build
+serve:
+	uvicorn app.main:app --host 0.0.0.0
 
 lint:
 	black --check .

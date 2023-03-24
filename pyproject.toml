@@ -7,6 +7,8 @@ version = "1.0"
 dependencies = [
     "fastapi[all]",
     "sqlalchemy",
+    "alembic",
+    "environs",
 ]
 
 [project.optional-dependencies]
@@ -24,7 +26,7 @@ exclude = ["*"] # This is not a real package, avoid trying to parse anything
 [tool.ruff]
 # https://beta.ruff.rs/docs/rules/
 select = ["E", "F", "I", "UP", "B"]
-target-version = "py38"
+target-version = "py311"
 exclude = [
     ".bzr",
     ".direnv",
@@ -36,16 +38,21 @@ exclude = [
     "elegant",
     "output"
 ]
+[tool.ruff.flake8-bugbear]
+extend-immutable-calls = [
+    "fastapi.Depends",
+    "fastapi.params.Depends",
+    "fastapi.Query",
+    "fastapi.params.Query"
+]
 
 [tool.black]
-target-version = ["py38"]
+target-version = ["py311"]
 extend-exclude = """
 # A regex preceded with ^/ will apply only to files and directories
 # in the root of the project.
 (
-  elegant/
-  | output/
-  | .venv/
+  .venv/
   | .git/
   | .ruff_cache/
 )

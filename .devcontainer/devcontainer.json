@@ -4,12 +4,12 @@
 	"name": "FastAPI",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "python:3.11",
-
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"ms-python.python",
-				"charliermarsh.ruff"
+				"charliermarsh.ruff",
+				"bungcip.better-toml"
 			],
 			"settings": {
 				"files.trimTrailingWhitespace": true,
