@@ -8,7 +8,6 @@ dependencies = [
     "fastapi[all]",
     "sqlalchemy",
     "alembic",
-    "environs",
 ]
 
 [project.optional-dependencies]
