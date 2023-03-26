@@ -10,6 +10,9 @@ dev:
 serve:
 	uvicorn app.main:app --host 0.0.0.0
 
+test:
+	pytest
+
 lint:
 	black --check .
 	ruff check .
