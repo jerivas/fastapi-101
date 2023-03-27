@@ -1,20 +1,18 @@
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session, sessionmaker
+from sqlmodel import Session, create_engine
 
 from app.main import app, get_db
-from app.models import Base
+from app.models import SQLModel
 
 engine = create_engine(
     "sqlite:///./test.sqlite3", connect_args={"check_same_thread": False}
 )
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 def override_get_db():
     try:
-        db = TestingSessionLocal()
+        db = Session(engine)
         yield db
     finally:
         db.close()
@@ -28,9 +26,9 @@ def setup_db():
     """
     Create/destroy the test database on very test
     """
-    Base.metadata.create_all(bind=engine)
+    SQLModel.metadata.create_all(bind=engine)
     yield
-    Base.metadata.drop_all(bind=engine)
+    SQLModel.metadata.drop_all(bind=engine)
 
 
 @pytest.fixture
@@ -43,7 +41,7 @@ def db():
     """
     Use this fixture to query the test database
     """
-    with TestingSessionLocal() as session:
+    with Session(engine) as session:
         yield session
 
 

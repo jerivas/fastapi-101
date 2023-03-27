@@ -1,26 +1,40 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
-
-from .database import Base
+from sqlmodel import Field, Relationship, SQLModel
 
 
-class User(Base):
-    __tablename__ = "users"
-
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-    is_active = Column(Boolean, default=True)
-
-    items = relationship("Item", back_populates="owner")
+class UserBase(SQLModel):
+    email: str = Field(unique=True, index=True)
 
 
-class Item(Base):
-    __tablename__ = "items"
+class User(UserBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    hashed_password: str | None
+    is_active: bool = Field(default=True)
+    items: list["Item"] = Relationship(back_populates="owner")
 
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
-    description = Column(String, index=True)
-    owner_id = Column(Integer, ForeignKey("users.id"))
 
-    owner = relationship("User", back_populates="items")
+class UserRead(UserBase):
+    id: int
+    is_active: bool
+    items: list["Item"]
+
+
+class UserCreate(UserBase):
+    password: str
+
+
+class ItemBase(SQLModel):
+    title: str = Field(index=True)
+    description: str = Field(index=True)
+    owner_id: int | None = Field(default=None, foreign_key="user.id")
+
+
+class Item(ItemBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    owner: User | None = Relationship(back_populates="items")
+
+
+class ItemCreate(ItemBase):
+    pass
+
+
+UserRead.update_forward_refs()

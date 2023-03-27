@@ -73,7 +73,9 @@ platformdirs==3.1.1
 pluggy==1.0.0
     # via pytest
 pydantic==1.10.7
-    # via fastapi
+    # via
+    #   fastapi
+    #   sqlmodel
 pytest==7.2.2
     # via fastapi-demo (pyproject.toml)
 python-dotenv==1.0.0
@@ -96,13 +98,18 @@ sniffio==1.3.0
 sqlalchemy==1.4.41
     # via
     #   alembic
-    #   fastapi-demo (pyproject.toml)
+    #   sqlmodel
+sqlalchemy2-stubs==0.0.2a32
+    # via sqlmodel
+sqlmodel==0.0.8
+    # via fastapi-demo (pyproject.toml)
 starlette==0.26.1
     # via fastapi
 typing-extensions==4.5.0
     # via
     #   alembic
     #   pydantic
+    #   sqlalchemy2-stubs
 ujson==5.7.0
     # via fastapi
 uvicorn[standard]==0.21.1
